@@ -1,0 +1,82 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1>{{post.title}}</h1>
+{{post.post_date}}<br>
+<small>By:
+    {{post.author.username}}</small><br>
+<p class="alert alert-primary" role="alert" style="color: #000000;background-color: #beccda;border-color: #001731;">{{post.body|safe}}</p>
+<strong><input class='btn btn-light btn-lg' type="button" onclick="history.back();" value="Back"/></strong>
+    {% if user.is_authenticated %}
+        {% if user.id == post.author.id %}
+            <a type="button" href="{% url 'delete_post' post.pk  %}" class="btn btn-outline-danger btn-lg">Delete</a>
+            <a type="button" href="{% url 'update_post' post.pk  %}" class="btn btn-outline-success btn-lg">Edit</a>
+        {% endif %}
+    {% endif %}
+
+    <br/><br/>
+    <hr>
+    <br/>
+    {% if user.is_authenticated %}
+        {% if liked %}
+            <form action="{% url 'like_post' post.pk %}" method="POST">
+                {% csrf_token %}
+                <button type="submit" name="post_id" value="{{ post.id }}" class="btn       btn-outline-danger">Unlike</button> - {{ total_likes }} Likes
+            </form>
+            
+        {% else %}
+            <form action="{% url 'like_post' post.pk %}" method="POST">
+                {% csrf_token %}
+                <button type="submit" name="post_id" value="{{ post.id }}" class="btn       btn-outline-warning">Like</button> - {{ total_likes }} Likes
+            </form>
+        {% endif %}
+        
+        <br><br>
+            
+            {% if latest_comment_list %}
+                {% for c in latest_comment_list %}
+                <div style="border-radius: 10px;" class="p-3 mb-2 bg-light text-dark">
+                <blockquote class="blockquote">
+                    
+                <p class="mb-0">{{c.comment_text}}</p>
+                <script>
+        var name = '{{ user.id }}'
+        document.getElementById('elder').value
+            = name;
+
+    </script>
+                <footer class="blockquote-footer"><cite>{{author_name}}</cite></footer>
+                {% if user.id == post.author.id %}
+                        {% if oked %}
+                            <form action="{% url 'ok_post' post.pk %}" method="POST">
+                                {% csrf_token %}
+                                <button type="submit" name="ok_id" value="{{ post.id }}" class="btn btn-outline-danger">Отметить решением</button>
+                            </form>
+                            
+                        {% else %}
+                            <form action="{% url 'ok_post' post.pk %}" method="POST">
+                                {% csrf_token %}
+                                <button type="submit" name="ok_id" value="{{ post.id }}" class="btn btn-outline-success">Отмечено решением</button>
+                            </form>
+                        {% endif %}
+                    {% endif %}
+                </blockquote>
+                </div>
+                {% endfor %}
+            {% else %}
+            <div style="border-radius: 10px;" class="p-3 mb-2 bg-danger text-white">
+                Нет комментариев!
+            </div>
+            {% endif %}
+            
+            <form action="{% url 'leave_comment' article.id %}" method="POST">
+                    {% csrf_token %}
+                    <br>
+                    <textarea name='text' required="" placeholder="текст комментария" cols="25" rows="4"></textarea><br>
+                    <button type="submit" class="btn btn-dark">Оставить комментарий</button>
+                    <br><br><br><br><br><br><br>
+            </form>
+    {% else %}
+        <small><a href="{% url 'register' %}">Зарегистрируйся</a> для просмотра комментариев</small>
+    {% endif %} 
+
+{% endblock %}
