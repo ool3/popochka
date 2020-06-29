@@ -42,6 +42,7 @@
 </head>
 <body>
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    
     <a class="navbar-brand" href="{% url 'home' %}"><img src="https://image.flaticon.com/icons/svg/1753/1753918.svg" width="30" height="30" class="navbar-brand d-inline-block align-top" alt="">It балаган</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
@@ -68,15 +69,17 @@
                 <a class="dropdown-item" href="{% url 'new_list' %}">Новые вопросы</a> 
                 <div class="dropdown-divider"></div>
 
-                <a class="dropdown-item" href="{% url 'logout' %}">Выйти</a>
+                <a class="dropdown-item" href="{% url 'edit_profile' %}">Профиль</a>
             {% else %}
                 <a class="dropdown-item" href="{% url 'register' %}">Зарегестрироваться</a>
                 <a class="dropdown-item" href="{% url 'login' %}">Войти</a>
             {% endif %}
         </div>
+
       </li>
-            
-        </ul>
+  
+    
+      </ul>
     </div>
 </nav>
 <br>

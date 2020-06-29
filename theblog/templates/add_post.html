@@ -11,6 +11,8 @@ Create A New Post
         <form method="POST">
             {% csrf_token %}
             {{ form.as_p }}
+            {{ form.media }}
+
             <button class="btn btn-warning">Добавить</button>
         </form>
     </div>
@@ -18,7 +20,7 @@ Create A New Post
         var name = '{{ user.id }}'
         document.getElementById('elder').value
             = name;
-
+        console.log(document.getElementById('elder'));
     </script>
 
 {% else %}

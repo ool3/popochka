@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 from django.urls import reverse
 from django.contrib import admin
 import datetime
+from ckeditor.fields import RichTextField
 
 class Category(models.Model):
     name = models.CharField(max_length=40)
@@ -19,9 +20,11 @@ class Post(models.Model):
     title = models.CharField(max_length=120)
     title_tag = models.CharField(max_length=120, default=title)
     author = models.ForeignKey(User, on_delete=models.CASCADE)
-    body = models.TextField(max_length=5000)
+    body = RichTextField(blank=True, null=True)
     post_date = models.DateField("Date", default=datetime.date.today)
     category = models.CharField(max_length=120, default='Python')
+    snippet = models.CharField(max_length=120, default='...')
+
     likes = models.ManyToManyField(User, related_name='blog_post')
 
     def total_likes(self):
@@ -36,7 +39,6 @@ class Post(models.Model):
 
 class Comment(models.Model):
     article = models.ForeignKey(Post, on_delete=models.CASCADE)
-    author_name = models.ForeignKey(User, on_delete=models.CASCADE)
     comment_text = models.CharField(max_length=200, verbose_name='текст комментария')
 
     def __str__(self):

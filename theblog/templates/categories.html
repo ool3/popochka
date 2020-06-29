@@ -13,7 +13,7 @@
                 - <a href="{% url 'update_post' post.pk %}">{Edit}</a>
                 {% endif %}
             </small><br/>
-            {{ post.body|slice:"100"|safe }}
+            {{ post.snippet|truncatechars:100|safe }}
             <hr>
             <br>
         </li>

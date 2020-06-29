@@ -2,7 +2,7 @@
 {% block content %}
 {% for item in new_list%}
 	<a href="{% url 'article_detail' item.pk %}">{{item.title}}</a><br>
-	{{item.body|slice:"100"|safe}}
+	{{item.body|truncatechars:100|safe}}
 	<hr>
 {% endfor %}
 {% endblock %}

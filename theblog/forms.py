@@ -11,7 +11,7 @@ for item in choices:
 class PostForm(forms.ModelForm):
     class Meta:
         model = Post
-        fields = ('title', 'title_tag', 'author', 'category', 'body')
+        fields = ('title', 'title_tag', 'author', 'category', 'body', 'snippet')
         widgets = {
             'title': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Напишите название'}),
             # поле ввода
@@ -20,27 +20,28 @@ class PostForm(forms.ModelForm):
 
             # 'author': forms.Select(attrs={'class': 'form-control'}),
             'category': forms.Select(choices=choice_list, attrs={'class': 'form-control'}),
-            'body': forms.Textarea(attrs={'class': 'form-control', 'placeholder':'Напишите что-нибудь полезное :)'}),
+            'body': forms.Textarea(attrs={'class': 'form-control', 'placeholder':'Напишите что-нибудь полезное :)', 'id':'body'}),
+            'snippet': forms.TextInput(attrs={'class': 'form-control', 'id': 'snip_id'})
         }
 
 
 class EditForm(forms.ModelForm):
     class Meta:
         model = Post
-        fields = ('title', 'category', 'body')
+        fields = ('title', 'category', 'body', 'snippet')
         widgets = {
             'title': forms.TextInput(attrs={'class': 'form-control'}),
             # поле ввода
             # 'author': forms.Select(attrs={'class': 'form-control'}),
             'category': forms.Select(choices=choice_list, attrs={'class': 'form-control'}),
             'body': forms.Textarea(attrs={'class': 'form-control'}),
+            'snippet': forms.Textarea(attrs={'class': 'form-control'}),
         }
 
 class CommentForm(forms.ModelForm):
     class Meta:
         model = Comment
-        fields = ('author_name', 'comment_text')
+        fields = ('comment_text', )
         widgets = {
-            'author_name': forms.TextInput(attrs={'class': 'form-control', 'value': 'el', 'id': 'elder', 'type': 'hidden'}),
-            'comment_text': forms.Textarea(attrs={'class': 'from-control', 'placeholder':'Текст комментария'})
+            'comment_text': forms.Textarea(attrs={'class': 'from-control', 'placeholder':'Текст комментария'}),
         }
